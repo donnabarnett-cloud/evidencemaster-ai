@@ -2,6 +2,7 @@
 import { AiProvider, AnalysisResult, TimelineEvent, Issue, MedicalEvidence, UserNote, ChatMessage, TribunalStrategy, PreliminaryHearingStrategy, ClaimantActionPlan, AppealPack } from "../types";
 import * as geminiService from "./geminiService";
 import * as webllmService from "./webllmService";
+import * as groqService from "./groqService";
 
 // Helper to get current provider from storage or default
 export const getProvider = (): AiProvider => {
@@ -19,7 +20,10 @@ export const analyzeDocument = async (
 ): Promise<AnalysisResult | null> => {
     const provider = getProvider();
     
-    if (provider === 'webllm') {
+    
+      if (provider === 'groq') {
+    return await groqService.analyzeDocument(content, fileName, docId, apiKey);
+  } else if (provider === 'webllm') {
         // WebLLM needs text content primarily. If we have raw bytes of PDF/Image, 
         // we might rely on the frontend extraction passed in `value`.
         // If content.value is missing (e.g. raw image bytes only), WebLLM service might struggle without OCR.
@@ -97,7 +101,7 @@ export const sendChatMessage = async (
 };
 
 // Re-export services for direct access where necessary (e.g. specific tool calls)
-export { geminiService, webllmService };
+export { geminiService, webllmService, groqService };
 
 // Forwarding other calls directly to Gemini for now to maintain stability
 export const consolidateAndAnalyzeIssues = geminiService.consolidateAndAnalyzeIssues;
