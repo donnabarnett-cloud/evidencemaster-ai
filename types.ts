@@ -6,7 +6,7 @@ export enum DocStatus {
   ERROR = "error"
 }
 
-export type AiProvider = 'gemini' | 'webllm';
+export type AiProvider = 'gemini' | 'webllm' | "groq";
 
 export interface ExtractionStats {
   eventCount: number;
