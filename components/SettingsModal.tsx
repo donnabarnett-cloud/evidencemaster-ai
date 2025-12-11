@@ -115,6 +115,28 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, currentP
 
         </div>
 
+                {/* Groq Option */}
+        <div
+          onClick={() => onProviderChange('groq')}
+          className={`cursor-pointer p-4 rounded-xl border-2 transition-all ${
+            currentProvider === 'groq'
+              ? 'border-green-500 bg-green-50'
+              : 'border-slate-200 hover:border-green-300'
+          } `}
+        >
+          <div className="flex justify-between items-center mb-2">
+            <h4 className="font-bold text-slate-800">Groq Cloud API (Fast)</h4>
+            {currentProvider === 'groq' && <CheckIcon className="text-green-600" />}
+          </div>
+          <p className="text-sm text-slate-600 mb-2">
+            Ultra-fast inference using Groq's LPU technology. Requires a Groq API Key.
+            <br/><strong>Best for:</strong> Speed, real-time responses, rapid document processing.
+          </p>
+          <div className="text-xs bg-slate-100 p-2 rounded text-slate-500">
+            Get your free API key at <a href="https://console.groq.com" target="_blank" rel="noopener noreferrer" className="text-green-600 underline">console.groq.com</a>
+          </div>
+        </div>
+
         <div className="px-6 py-4 bg-slate-50 flex justify-end">
           <button 
             onClick={onClose}
