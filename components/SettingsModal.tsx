@@ -14,6 +14,7 @@ interface SettingsModalProps {
 const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, currentProvider, onProviderChange }) => {
   const [downloadProgress, setDownloadProgress] = useState<{ progress: number, text: string } | null>(null);
   const [isEngineReady, setIsEngineReady] = useState(false);
+    const [groqApiKey, setGroqApiKey] = useState(() => localStorage.getItem('groq_api_key') || '');
 
   useEffect(() => {
     // Check if engine is already loaded
@@ -137,6 +138,24 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, currentP
           </div>
         </div>
 
+
+                  
+          {/* Groq API Key Input */}
+          {currentProvider === 'groq' && (
+            <div className="mt-3">
+              <label className="text-xs text-slate-600 block mb-1">Groq API Key</label>
+              <input
+                type="password"
+                value={groqApiKey}
+                onChange={(e) => {
+                  setGroqApiKey(e.target.value);
+                  localStorage.setItem('groq_api_key', e.target.value);
+                }}
+                placeholder="Enter your Groq API key (gsk_...)" 
+                className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              />
+            </div>
+          )}
         <div className="px-6 py-4 bg-slate-50 flex justify-end">
           <button 
             onClick={onClose}
